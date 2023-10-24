@@ -1,51 +1,35 @@
 package com.proyecto.apiback.models.entities;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NonNull;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
-@Entity
-@Table(name="users")
-public class User {
+public class UserBody {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( nullable = false)
     private String name;
-    @Column( nullable = false)
+
     private String lastname;
-    @Column
+
     private String birthDate;
-    @Column
+
     private String institutions;
-    @Column( nullable = false)
+
     private String academicDegree;
-    @Column
+
     private String teachingInstitution;
 
     private String teachingRole;
 
-    @Column(unique = true)
     private String email;
 
-    @Column( nullable = false)
     private String password;
 
-    @Column
-    @JoinTable(
-            name = "user_interest",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name="interest_id"),
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id","interest_id"})}
-    )
-    @ManyToMany
-    private List<Interest> interest;
+    private Long [] interest;
 
     public Long getId() {
         return id;
@@ -127,17 +111,17 @@ public class User {
         this.password = password;
     }
 
-    public List<Interest> getInterest() {
+    public Long[] getInterest() {
         return interest;
     }
 
-    public void setInterest(List<Interest> interest) {
+    public void setInterest(Long[] interest) {
         this.interest = interest;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserBody{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
@@ -148,7 +132,7 @@ public class User {
                 ", teachingRole='" + teachingRole + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", interest=" + interest +
+                ", interest=" + Arrays.toString(interest) +
                 '}';
     }
 }
